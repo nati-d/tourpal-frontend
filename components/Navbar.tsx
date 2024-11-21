@@ -1,5 +1,5 @@
 "use client";
-import {CATEGORIES, NAV_LINKS} from "@/constants";
+import {NAV_LINKS} from "@/constants";
 import Image from "next/image";
 import React, {useState} from "react";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "./ui/carousel";
 import DestinationCard from "./DestinationCard";
-import {AA_DESTINATIONS, HOTELS} from "@/constants";
+import {HOTELS} from "@/constants";
 
 const HotelsSection = () => {
 	return (

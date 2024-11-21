@@ -7,15 +7,23 @@ import {ACTIVITY_PREFERENCES, COMPANION_PREFRENCES} from "@/constants";
 import {DayPicker} from "react-day-picker";
 import {format} from "date-fns";
 
-import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command";
 
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {fetchCities} from "@/app/api/fetchCities";
-import {LoaderPinwheel, Sparkle, Sparkles} from "lucide-react";
+import {LoaderPinwheel,  Sparkles} from "lucide-react";
 import {fetchItinerary} from "@/app/api/getAiPlan";
 import PlanResultDialog from "./PlanResultDialog";
+
+type Itinerary = {
+	title: string;
+	description: string;
+	activities: {
+	  name: string;
+	  time: string;
+	}[];
+  };
+  
 
 const formSchema = z.object({
 	destination: z.string().min(1, "Please select a destination city."),
@@ -37,7 +45,7 @@ const NewTravelForm = () => {
 	const [cityValue, setCityValue] = React.useState<string>("");
 	const [fetching, setFetching] = React.useState(false);
 	const [resultModalOpen, setResultModalOpen] = React.useState(false);
-	const [plans, setPlans] = React.useState<any>(null);
+	const [plans, setPlans] = React.useState<Itinerary[] | null>(null);
 
 	const form = useForm<formSchemaType>({
 		resolver: zodResolver(formSchema),
