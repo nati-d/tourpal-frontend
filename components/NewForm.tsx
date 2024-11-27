@@ -103,7 +103,7 @@ const NewTravelForm = () => {
 		setCityValue(inputValue);
 		if (inputValue) {
 			setLoading(true);
-			const cities = await fetchCities(inputValue);
+			const cities: any = await fetchCities(inputValue);
 			setOptions(cities);
 			setLoading(false);
 		} else {
@@ -148,7 +148,7 @@ const NewTravelForm = () => {
 											<Command>
 												<CommandInput
 													value={cityValue}
-													onChange={(e) => handleInputChange(e.target.value)}
+													// onChange={(e: any) => handleInputChange(e.target.value)}
 												/>
 												<CommandList>
 													{loading ? (
@@ -199,7 +199,7 @@ const NewTravelForm = () => {
 											<DayPicker
 												mode='range'
 												numberOfMonths={1}
-												selected={date}
+												selected={date as any}
 												onSelect={handleDateSelect}
 												disabled={{before: new Date()}}
 											/>
@@ -307,7 +307,7 @@ const NewTravelForm = () => {
 				<PlanResultDialog
 					open={resultModalOpen}
 					handleCloseModal={() => setResultModalOpen(false)}
-					plans={plans}
+					plans={plans as any}
 				/>
 			</form>
 		</Form>
