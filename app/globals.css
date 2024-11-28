@@ -92,8 +92,8 @@ header a {
 .container {
   width: 100%;
   max-width: 1200px;
-  margin: auto;
-  margin-top: 48px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 @layer base {

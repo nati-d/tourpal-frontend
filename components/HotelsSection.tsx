@@ -5,8 +5,8 @@ import {HOTELS} from "@/constants";
 
 const HotelsSection = () => {
 	return (
-		<div className='container '>
-			<h1 className='text-[28px] font-semibold mb-4'>Hotels in Addis to Stay</h1>
+		<div className='container mt-10'>
+			<h1 className='text-[28px] font-semibold mb-4'>Featured Places in Tourpal</h1>
 			{/* <p className='text-[16px] mb-4'>Discover African Capital Choice Best of the Best Destinations.</p> */}
 			<Carousel className='w-full'>
 				<CarouselContent className='-ml-4'>

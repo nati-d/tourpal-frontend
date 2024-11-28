@@ -23,20 +23,44 @@ export const NAV_LINKS = [
 
 export const CATEGORIES = [
 	{
-		name: "Hotels",
-		href: "/hotels",
+		id: 1,
+		name: "Hotel",
+		icon: "Hotel",
+		link: "/categories/hotel",
+		bgColor: "#FFD700",
+		textColor: "#000000",
 	},
 	{
-		name: "Adventures",
-		href: "/adventures",
+		id: 2,
+		name: "Restaurant",
+		icon: "Utensils",
+		link: "/categories/restaurant",
+		bgColor: "#FF6347",
+		textColor: "#FFFFFF",
 	},
 	{
-		name: "Restaurants",
-		href: "/restaurants",
+		id: 3,
+		name: "Attraction",
+		icon: "Landmark",
+		link: "/categories/attraction",
+		bgColor: "#48D1CC",
+		textColor: "#000000",
 	},
 	{
-		name: "Places to stay",
-		href: "/places-to-stay",
+		id: 4,
+		name: "Tour Guide",
+		icon: "Map-Pin",
+		link: "/categories/tour-guide",
+		bgColor: "#8A2BE2",
+		textColor: "#FFFFFF",
+	},
+	{
+		id: 5,
+		name: "Car Rental",
+		icon: "Car",
+		link: "/categories/car-rental",
+		bgColor: "#32CD32",
+		textColor: "#000000",
 	},
 ];
 
@@ -127,52 +151,51 @@ export const HOTELS = [
 		href: "/hilton-addis-ababa",
 		image: "https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=600",
 		amenities: [],
-		rating: 4.5
+		rating: 4.5,
 	},
 	{
 		name: "Sheraton Addis",
 		href: "/sheraton-addis",
 		image: "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=600",
 		amenities: ["Free WiFi", "Pool", "Spa", "Fitness Center"],
-		rating: 4.8
+		rating: 4.8,
 	},
 	{
 		name: "Hyatt Regency Addis Ababa",
 		href: "/hyatt-regency-addis-ababa",
 		image: "https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=600",
 		amenities: ["Restaurant", "Bar", "Meeting Rooms", "Airport Shuttle"],
-		rating: 4.7
+		rating: 4.7,
 	},
 	{
 		name: "Radisson Blu Hotel",
 		href: "/radisson-blu-addis-ababa",
 		image: "https://images.pexels.com/photos/53464/sheraton-palace-hotel-lobby-architecture-san-francisco-53464.jpeg?auto=compress&cs=tinysrgb&w=600",
 		amenities: ["Free Parking", "Business Center", "Pet Friendly"],
-		rating: 4.6
+		rating: 4.6,
 	},
 	{
 		name: "Marriott Executive Apartments",
 		href: "/marriott-executive-apartments",
 		image: "https://images.pexels.com/photos/1579253/pexels-photo-1579253.jpeg?auto=compress&cs=tinysrgb&w=600",
 		amenities: ["Kitchen", "Laundry Service", "Long Stay Offers"],
-		rating: 4.4
+		rating: 4.4,
 	},
 	{
 		name: "Golden Tulip Addis Ababa",
 		href: "/golden-tulip-addis-ababa",
 		image: "https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg?auto=compress&cs=tinysrgb&w=600",
 		amenities: ["Room Service", "Breakfast Included", "Lounge"],
-		rating: 4.3
+		rating: 4.3,
 	},
 	{
 		name: "Skylight Hotel",
 		href: "/skylight-hotel",
 		image: "https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&cs=tinysrgb&w=600",
 		amenities: ["Free Breakfast", "Pool", "Gym", "Kids Play Area"],
-		rating: 4.2
-	}
+		rating: 4.2,
+	},
 ];
-
 
 export const ACTIVITY_PREFERENCES = [
 	{
