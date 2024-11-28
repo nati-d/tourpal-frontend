@@ -1,6 +1,5 @@
 import React from "react";
 import CategoriesSection from "@/components/CategoriesSection";
-
 import FeaturedSite from "@/components/FeauredSites";
 import Testimonials from "@/components/Testimonials";
 import Cycle from "@/components/Cycle/Cycle";

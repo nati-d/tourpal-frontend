@@ -4,12 +4,11 @@ interface CityOption {
 }
 
 export const fetchCities = async (query: string): Promise<CityOption[]> => {
-	const response = await fetch(`/api/cities?query=${query}`);
+	if (!query) return [];
+	const response = await fetch(`http://api.geonames.org/searchJSON?name_startsWith=${query}&maxRows=10&username=nathy94`);
 	const data = await response.json();
-
-	// Ensure the returned data matches CityOption[]
-	return data.map((city: {name: string; id: string}) => ({
-		label: city.name,
-		value: city.id,
+	return data.geonames.map((city: any) => ({
+		label: `${city.name}, ${city.countryName}`,
+		value: city.geonameId,
 	}));
 };

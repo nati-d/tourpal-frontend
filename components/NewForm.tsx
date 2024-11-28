@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {z} from "zod";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -7,32 +7,16 @@ import {ACTIVITY_PREFERENCES, COMPANION_PREFRENCES} from "@/constants";
 import {DayPicker} from "react-day-picker";
 import {format} from "date-fns";
 
+import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
+
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command";
 
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {fetchCities} from "@/app/api/fetchCities";
-import {LoaderPinwheel, Sparkles} from "lucide-react";
+import {LoaderPinwheel, Sparkle, Sparkles} from "lucide-react";
 import {fetchItinerary} from "@/app/api/getAiPlan";
 import PlanResultDialog from "./PlanResultDialog";
 
-// Types for fetched cities
-interface CityOption {
-	label: string;
-	value: string;
-}
-
-// Types for itinerary
-type Itinerary = {
-	title: string;
-	description: string;
-	activities: {
-		name: string;
-		time: string;
-	}[];
-};
-
-type DateRange = {from: Date; to: Date};
-
-// Form schema definition
 const formSchema = z.object({
 	destination: z.string().min(1, "Please select a destination city."),
 	datesOfTravel: z.object({
@@ -45,15 +29,15 @@ const formSchema = z.object({
 
 export type formSchemaType = z.infer<typeof formSchema>;
 
-const NewTravelForm: React.FC = () => {
-	const [date, setDate] = useState<DateRange | undefined>();
-	const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false);
-	const [options, setOptions] = useState<CityOption[]>([]);
-	const [loading, setLoading] = useState<boolean>(false);
-	const [cityValue, setCityValue] = useState<string>("");
-	const [fetching, setFetching] = useState<boolean>(false);
-	const [resultModalOpen, setResultModalOpen] = useState<boolean>(false);
-	const [plans, setPlans] = useState<Itinerary[] | null>(null);
+const NewTravelForm = () => {
+	const [date, setDate] = React.useState<{from?: Date; to?: Date} | undefined>();
+	const [isDatePickerOpen, setIsDatePickerOpen] = React.useState(false);
+	const [options, setOptions] = React.useState<{label: string; value: string}[]>([]);
+	const [loading, setLoading] = React.useState(false);
+	const [cityValue, setCityValue] = React.useState<string>("");
+	const [fetching, setFetching] = React.useState(false);
+	const [resultModalOpen, setResultModalOpen] = React.useState(false);
+	const [plans, setPlans] = React.useState<any>(null);
 
 	const form = useForm<formSchemaType>({
 		resolver: zodResolver(formSchema),
@@ -67,9 +51,9 @@ const NewTravelForm: React.FC = () => {
 			},
 		},
 	});
-
-	const onSubmit = async (values: formSchemaType): Promise<void> => {
+	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		try {
+			// Prepare the data for the API
 			setFetching(true);
 			const payload = {
 				destination: values.destination,
@@ -81,39 +65,39 @@ const NewTravelForm: React.FC = () => {
 
 			console.log("Submitting:", payload);
 
+			// Call the API function
 			const itinerary = await fetchItinerary(payload);
 			setPlans(itinerary);
-			setResultModalOpen(true);
+			console.log("Itinerary received:", itinerary);
+			setResultModalOpen(true); // Open the modal
+			console.log("Modal state:", resultModalOpen);
 			setFetching(false);
+
+			// Handle the response (e.g., display it on the page)
 		} catch (error) {
 			console.error("Failed to generate itinerary:", error);
-			setFetching(false);
 		}
 	};
 
-	const handleDateSelect = (range: DateRange | undefined) => {
-		if (range?.from && range?.to) {
-			setDate({from: range.from, to: range.to});
-		} else {
-			setDate(undefined);
+	const handleDateSelect = (selectedDates: {from?: Date; to?: Date} | undefined) => {
+		setDate(selectedDates);
+		form.setValue("datesOfTravel", {
+			from: selectedDates?.from ?? new Date(),
+			to: selectedDates?.to ?? new Date(),
+		});
+
+		if (selectedDates?.from && selectedDates?.to) {
+			setIsDatePickerOpen(false);
 		}
 	};
 
-	const handleInputChange = async (inputValue: string): Promise<void> => {
+	const handleInputChange = async (inputValue: string) => {
 		setCityValue(inputValue);
-
 		if (inputValue) {
 			setLoading(true);
-
-			try {
-				const cities = await fetchCities(inputValue); // Already typed as CityOption[]
-				setOptions(cities);
-			} catch (error) {
-				console.error("Failed to fetch cities:", error);
-				setOptions([]); // Handle failure gracefully
-			} finally {
-				setLoading(false);
-			}
+			const cities = await fetchCities(inputValue);
+			setOptions(cities);
+			setLoading(false);
 		} else {
 			setOptions([]);
 		}
@@ -123,7 +107,7 @@ const NewTravelForm: React.FC = () => {
 		handleInputChange("");
 	}, []);
 
-	const formatDateRange = (dates: {from?: Date; to?: Date} | undefined): string => {
+	const formatDateRange = (dates: {from?: Date; to?: Date} | undefined) => {
 		if (dates?.from && dates?.to) {
 			return `${format(dates.from, "MMM dd, yyyy")} - ${format(dates.to, "MMM dd, yyyy")}`;
 		}
@@ -139,7 +123,7 @@ const NewTravelForm: React.FC = () => {
 				<FormField
 					control={form.control}
 					name='destination'
-					render={() => {
+					render={({field}) => {
 						return (
 							<FormItem>
 								<FormLabel>Select destination city</FormLabel>
@@ -156,9 +140,8 @@ const NewTravelForm: React.FC = () => {
 											<Command>
 												<CommandInput
 													value={cityValue}
-													onValueChange={handleInputChange}
+													onChange={(e) => handleInputChange(e.target.value)}
 												/>
-
 												<CommandList>
 													{loading ? (
 														<CommandEmpty>Loading...</CommandEmpty>
@@ -190,7 +173,7 @@ const NewTravelForm: React.FC = () => {
 				<FormField
 					control={form.control}
 					name='datesOfTravel'
-					render={() => (
+					render={({field}) => (
 						<FormItem>
 							<FormLabel>Select Dates</FormLabel>
 							<FormControl>
@@ -208,7 +191,7 @@ const NewTravelForm: React.FC = () => {
 											<DayPicker
 												mode='range'
 												numberOfMonths={1}
-												selected={date as any}
+												selected={date}
 												onSelect={handleDateSelect}
 												disabled={{before: new Date()}}
 											/>
@@ -303,7 +286,7 @@ const NewTravelForm: React.FC = () => {
 							<FormMessage />
 						</FormItem>
 					)}
-				/>{" "}
+				/>
 				<button
 					type='submit'
 					className={`btn-primary flex font-semibold gap-2 items-center justify-center w-full py-2 rounded-md 
@@ -316,7 +299,7 @@ const NewTravelForm: React.FC = () => {
 				<PlanResultDialog
 					open={resultModalOpen}
 					handleCloseModal={() => setResultModalOpen(false)}
-					plans={plans as any}
+					plans={plans}
 				/>
 			</form>
 		</Form>
