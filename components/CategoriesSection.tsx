@@ -49,7 +49,7 @@ export default function CategorySection() {
 					</div>
 				</div>
 			</div>
-			<ScrollArea className='w-full'>
+			<ScrollArea className='w-full overflow-hidden'>
 				<div className='container px-4 md:px-6'>
 					<div className='grid grid-flow-col auto-cols-max gap-4'>
 						{categories.map((category, index) => (

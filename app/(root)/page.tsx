@@ -5,6 +5,7 @@ import FeaturedSite from "@/components/FeauredSites";
 import Testimonials from "@/components/Testimonials";
 import Cycle from "@/components/Cycle/Cycle";
 import Hero from "@/components/Hero/Hero";
+import VideoSection from "@/components/VideoSection";
 
 const HomePage = () => {
 	return (
@@ -13,6 +14,7 @@ const HomePage = () => {
 			<CategoriesSection />
 			<Cycle />
 			<FeaturedSite />
+			<VideoSection />
 			<Testimonials />
 		</section>
 	);

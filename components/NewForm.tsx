@@ -312,8 +312,7 @@ const NewTravelForm: React.FC = () => {
 				>
 					{fetching ? <LoaderPinwheel size={14} /> : <Sparkles size={14} />}
 					{fetching ? "Generating..." : "Generate AI Plan"}
-				</button>			<Carousel />
-
+				</button>
 				<PlanResultDialog
 					open={resultModalOpen}
 					handleCloseModal={() => setResultModalOpen(false)}
