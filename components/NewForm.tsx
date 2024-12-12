@@ -1,3 +1,4 @@
+import {useRouter} from "next/navigation";
 import React from "react";
 import {z} from "zod";
 import {useForm} from "react-hook-form";
@@ -51,6 +52,9 @@ const NewTravelForm = () => {
 			},
 		},
 	});
+
+	const router = useRouter();
+
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		try {
 			// Prepare the data for the API
@@ -65,17 +69,23 @@ const NewTravelForm = () => {
 
 			console.log("Submitting:", payload);
 
-			// Call the API function
 			const itinerary = await fetchItinerary(payload);
 			setPlans(itinerary);
-			console.log("Itinerary received:", itinerary);
-			setResultModalOpen(true); // Open the modal
-			console.log("Modal state:", resultModalOpen);
-			setFetching(false);
 
-			// Handle the response (e.g., display it on the page)
+			console.log("Itinerary received:", itinerary);
+
+			const city = values.destination.split(",")[0].trim();
+
+			localStorage.setItem("city", city);
+
+			localStorage.setItem("itinerary", JSON.stringify(itinerary));
+
+			router.push("/plan");
+
+			setFetching(false);
 		} catch (error) {
 			console.error("Failed to generate itinerary:", error);
+			setFetching(false);
 		}
 	};
 

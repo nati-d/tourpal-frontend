@@ -5,6 +5,7 @@ import Testimonials from "@/components/Testimonials";
 import Cycle from "@/components/Cycle/Cycle";
 import Hero from "@/components/Hero/Hero";
 import VideoSection from "@/components/VideoSection";
+import VRPage from "@/components/VrPage";
 
 const HomePage = () => {
 	return (
@@ -15,6 +16,7 @@ const HomePage = () => {
 			<FeaturedSite />
 			<VideoSection />
 			<Testimonials />
+			<VRPage />
 		</section>
 	);
 };
